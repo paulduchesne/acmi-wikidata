@@ -1,2 +1,2 @@
-# acmi-wikidata
+# ACMI // Wikidata
 Entity matching between ACMI works and Wikidata.
