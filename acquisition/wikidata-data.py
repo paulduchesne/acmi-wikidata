@@ -3,8 +3,6 @@
 
 # import libraries and define functions.
 
-import datetime
-
 import pandas
 import pathlib
 import pydash
@@ -30,9 +28,10 @@ def sparql_query(query, service):
 
 def string_norm(row, col):
 
-  # normalise strings for matching.
+    # normalise strings for matching.
 
-  return unidecode.unidecode(row[col]).upper()
+    if row[col]:
+        return unidecode.unidecode(str(row[col])).upper()
 
 def annual_query(filt):
 
@@ -45,7 +44,7 @@ def annual_query(filt):
             ?work wdt:P31 wd:Q11424.
             """+filt+"""
             ?work ?property ?creator.
-            ?work wdt:P1476 ?title.
+            OPTIONAL { ?work wdt:P1476 ?title. }.
             ?creator wdt:P31 wd:Q5.
             SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
         }""", 'https://query.wikidata.org/sparql')
@@ -67,13 +66,13 @@ def annual_query(filt):
         for x in ['creator_name', 'work_name']:
             annual[x] = annual.apply(string_norm, col=x, axis=1)
 
-        annual = annual[['creator_id', 'creator_name', 'work_id', 'work_name']].drop_duplicates()
+        annual = annual[['creator_id', 'creator_name', 'work_id', 'work_name']]
         annual = annual.loc[annual.work_id != annual.work_name]
+        annual = annual.drop_duplicates().dropna()
+
         return annual
 
 # build dataframe of wikidata film titles and creators.
-
-print(datetime.datetime.now())
 
 query_filter = """FILTER NOT EXISTS { ?work wdt:P577 [] }."""
 dataframe = annual_query(query_filter)
@@ -88,6 +87,3 @@ for year in range(1890, 2030):
 
 save_path = pathlib.Path.home() / 'wikidata-data.csv'
 dataframe.to_csv(save_path, index=False)
-
-
-print(datetime.datetime.now())

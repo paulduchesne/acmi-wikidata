@@ -23,7 +23,7 @@ def string_norm(row, col):
 
 # convert acmi json files to normalised dataframe.
 
-api_path = pathlib.Path.home() / 'acmi-api' / 'app' / 'json' / 'works'
+api_path = pathlib.Path.home() / 'git' / 'acmi-api' / 'app' / 'json' / 'works'
 api_data = [x for x in api_path.rglob('**/*') if x.suffix == '.json']
 
 cols = ['acmi_id', 'id', 'title', 'creators_primary']
