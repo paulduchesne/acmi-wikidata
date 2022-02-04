@@ -24,13 +24,6 @@ print('wikidata data', len(wikidata_data))
 # find matching filmographies for each acmi creator. 
 
 acmi_creator_list = list(acmi_data.creator_id.unique())
-
-# test creators based on previous matches.
-
-acmi_creator_list = [21685, 22021, 23211, 23583, 24730, 26128, 30241, 30804, 35050, 35746, 
-                36317, 67909, 71762, 76133, 76873, 77807, 78215, 80241, 82218, 82981]
-
-print(len(acmi_creator_list))
 commence = datetime.datetime.now()
 for i, x in enumerate(acmi_creator_list):
     save_path = pathlib.Path.cwd() / 'data' / f'{str(x).zfill(8)}.csv'
