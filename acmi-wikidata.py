@@ -12,7 +12,7 @@ import requests
 import sys
 
 # load filmography repo code as a module.
-sys.path.extend(['/home/paulduchesne/git/filmography-matching'])
+sys.path.extend(['/home/pi/git/filmography-matching'])
 import filmographymatching
 
 # define functions.
@@ -45,9 +45,9 @@ def annual_query(filt):
 
     # capture year period of wikidata film/creator data
     # or all films without publication date.
-    
+
     annual = sparql_query("""
-        SELECT DISTINCT ?creator ?creatorLabel ?work  ?workLabel ?title 
+        SELECT DISTINCT ?creator ?creatorLabel ?work  ?workLabel ?title
         WHERE {
             ?work wdt:P31 wd:Q11424.
             """+filt+"""
@@ -84,7 +84,7 @@ def parse_single(row, col, val):
 
     # extract single dictionary values.
 
-    return pydash.get(row[col], val) 
+    return pydash.get(row[col], val)
 
 # pathways for csvs.
 
@@ -123,10 +123,10 @@ if not acmi_path.exists():
 
     # reduction to sample set not required for proper run.  
 
-    sample = ['00021685', '00022021', '00023211', '00023583', '00024730', '00026128', '00030241', 
-        '00030804', '00035050', '00035746', '00036317', '00067909', '00071762', '00076133', 
-        '00076873', '00077807', '00078215', '00080241', '00082218', '00082981']
-    dataframe = dataframe.loc[dataframe.creator_id.isin([int(x) for x in sample])]
+    # sample = ['00021685', '00022021', '00023211', '00023583', '00024730', '00026128', '00030241', 
+    #     '00030804', '00035050', '00035746', '00036317', '00067909', '00071762', '00076133', 
+    #     '00076873', '00077807', '00078215', '00080241', '00082218', '00082981']
+    # dataframe = dataframe.loc[dataframe.creator_id.isin([int(x) for x in sample])]
 
     dataframe = dataframe.loc[~dataframe.creator_name.isin([''])]
     dataframe.to_csv(acmi_path, index=False)
