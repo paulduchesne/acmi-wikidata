@@ -13,23 +13,4 @@ Wikidata data is produced in response to a SPARQL query, requesting all "creator
 
 ## Matching
 
-The method used here is based on suggestions made by Georg Eckes (Bundesarchiv, Berlin) in 2019 during a discussion around practical linked open data strategies for film archives, and possible linking methodologies.
-
-This process follows these steps:
-- select a specific subject to be matched from dataset A.
-- assemble a list of film titles from dataset A attributed to that subject.
-- gather a list of possible candidates from dataset B based on very loose name matching.
-- assemble lists of film titles from dataset B for each candidate. 
-- for each candidate, for each title in the first list, find the highest matching title match from the candidate film list.
-- score each candidate by the median score for each title match.
-- currently a pass is awarded for a median of 100, and is accepted if only one candidate achieves this score.
-
-## Matching example
-
-The following is an actual example of how this functions, using ACMI ID 34373 AGNES VARDA as a test case.
-ACMI lists five works against this entity: [LES CREATURES, JACQUOT DE NANTES [WIDESCREEN], THE GLEANERS AND I, CLEO FROM 5 TO 7, VAGABOND].
-Extremely loose string matching return 440 possible entity matches from Wikidata - we will focus on two: [Václav Hanuš (Q94909886)](https://www.wikidata.org/wiki/Q94909886) and [Agnès Varda (Q229990)](https://www.wikidata.org/wiki/Q229990). For each of these candidates, we return a filmography list from Wikidata.
-
-## Further matching
-
-## Known issues
+The matching process uses the [filmography matching](https://github.com/paulduchesne/filmography-matching) module. A detailed description of the process can be found there.
